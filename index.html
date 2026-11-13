@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>幸せおみくじ</title>
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 25px 16px;
+  font-family: sans-serif;
+  background: #f8f3e9;
+  color: #493b30;
+  text-align: center;
+}
+
+.container {
+  max-width: 460px;
+  margin: 25px auto;
+  padding: 30px 20px;
+  background: #fffdf8;
+  border: 2px solid #d7b878;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px #00000012;
+}
+
+h1 {
+  color: #a47730;
+  font-size: 30px;
+  margin: 5px 0;
+}
+
+.subtitle {
+  color: #9b8873;
+  letter-spacing: 3px;
+  font-size: 12px;
+}
+
+.date {
+  margin: 22px 0;
+  color: #88745e;
+}
+
+.shrine {
+  font-size: 65px;
+  margin: 15px;
+}
+
+.message {
+  line-height: 1.9;
+  color: #796858;
+}
+
+button {
+  border: none;
+  border-radius: 30px;
+  padding: 16px 35px;
+  margin: 20px 0;
+  background: #a47730;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.result {
+  display: none;
+  margin-top: 20px;
+  padding: 20px 12px;
+  background: #fbf4e5;
+  border-radius: 15px;
+  line-height: 1.9;
+}
+
+.fortune {
+  font-size: 38px;
+  color: #b17d27;
+  font-weight: bold;
+  margin: 10px;
+}
+
+.detail {
+  text-align: left;
+  margin-top: 20px;
+  line-height: 2;
+}
+
+.footer {
+  font-size: 12px;
+  color: #a99b89;
+  margin-top: 25px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <div class="subtitle">TODAY'S FORTUNE</div>
+  <h1>幸せおみくじ</h1>
+  <div class="shrine">⛩️</div>
+
+  <div class="date" id="date"></div>
+
+  <p class="message">
+    今日のあなたに、<br>
+    小さな幸せが訪れますように。
+  </p>
+
+  <button onclick="drawFortune()">
+    おみくじを引く ✨
+  </button>
+
+  <div class="result" id="result">
+    <div>今日のあなたの運勢は…</div>
+    <div class="fortune" id="fortune"></div>
+    <p id="comment"></p>
+
+    <div class="detail">
+      🎨 ラッキーカラー：<span id="color"></span><br>
+      🎁 ラッキーアイテム：<span id="item"></span><br>
+      🌸 今日の開運アクション：<span id="action"></span>
+    </div>
+  </div>
+
+  <button onclick="drawFortune()" style="background:#88745e;">
+    もう一度引く
+  </button>
+
+  <div class="footer">
+    あなたの今日が素敵な一日になりますように。
+  </div>
+
+</div>
+
+<script>
+const fortunes = [
+  {
+    name: "大吉",
+    comment: "今日は絶好調！新しいことに挑戦すると、嬉しい発見がありそう。",
+    color: "ゴールド",
+    item: "お気に入りの飲み物",
+    action: "気になっていたことを始めてみよう"
+  },
+  {
+    name: "中吉",
+    comment: "焦らず一歩ずつ進めば大丈夫。周囲との協力が幸運を呼びます。",
+    color: "スカイブルー",
+    item: "ハンカチ",
+    action: "誰かに笑顔で挨拶してみよう"
+  },
+  {
+    name: "小吉",
+    comment: "小さな幸せに気づける日。身近なところに嬉しい出来事がありそう。",
+    color: "ピンク",
+    item: "甘いお菓子",
+    action: "少しだけ自分を甘やかそう"
+  },
+  {
+    name: "吉",
+    comment: "穏やかな一日になりそう。いつものペースを大切に。",
+    color: "グリーン",
+    item: "お気に入りのペン",
+    action: "身の回りを少し整理してみよう"
+  },
+  {
+    name: "末吉",
+    comment: "これから運気が上向く予感。今は準備を楽しむ時期です。",
+    color: "パープル",
+    item: "小さなメモ帳",
+    action: "明日の楽しみを一つ考えてみよう"
+  },
+  {
+    name: "凶",
+    comment: "今日は無理をしないことが大切。休むことも立派な前進です。",
+    color: "ホワイト",
+    item: "温かい飲み物",
+    action: "深呼吸してゆっくり過ごそう"
+  }
+];
+
+const today = new Date();
+document.getElementById("date").textContent =
+  today.getFullYear() + "年" +
+  (today.getMonth() + 1) + "月" +
+  today.getDate() + "日";
+
+function drawFortune() {
+  const result = fortunes[
+    Math.floor(Math.random() * fortunes.length)
+  ];
+
+  document.getElementById("fortune").textContent =
+    result.name;
+
+  document.getElementById("comment").textContent =
+    result.comment;
+
+  document.getElementById("color").textContent =
+    result.color;
+
+  document.getElementById("item").textContent =
+    result.item;
+
+  document.getElementById("action").textContent =
+    result.action;
+
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("result").scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+}
+</script>
+</body>
+</html>
