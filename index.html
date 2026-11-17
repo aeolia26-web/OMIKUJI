@@ -206,10 +206,7 @@
   <div class="date" id="date"></div>
   <div class="sakura">⛩️</div>
 
-  <p class="message" id="message">
-    今日のあなたに、<br>
-    幸せが訪れますように。
-  </p>
+  
   <p class="message" id="message">
     今日のあなたに、<br>
     幸せが訪れますように。
@@ -219,7 +216,7 @@
     おみくじを引く ✨
   </button>
 
-  <div class="result">
+
   <div class="result">
     <div class="card-inner" id="cardInner">
       <div class="card-back" id="cardBack">
@@ -324,7 +321,7 @@ function drawFortune() {
     document.getElementById("item").textContent = result.item;
     document.getElementById("action").textContent = result.action;
 
-    cardBack.style.display = "none";
+cardBack.style.display = "none";
     cardFront.style.display = "block";
     cardInner.classList.remove("flipping");
     shrine.classList.remove("shaking");
