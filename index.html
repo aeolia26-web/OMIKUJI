@@ -303,12 +303,12 @@ function updateDate() {
 updateDate();
 setInterval(updateDate, 60000);
 
-let drawing = false;
-let lastIndex = -1;
 
-  const fortuneWeights = {
+let drawing = false;
+
+const fortuneWeights = {
   "大吉": 15,
-  "中吉": 28, 
+  "中吉": 28,
   "吉": 48,
   "末吉": 5,
   "凶": 4
@@ -321,6 +321,7 @@ function pickFortune() {
 
   for (const name in fortuneWeights) {
     r -= fortuneWeights[name];
+
     if (r < 0) {
       chosenName = name;
       break;
@@ -328,18 +329,16 @@ function pickFortune() {
   }
 
   const candidates = fortunes.filter(f => f.name === chosenName);
-  if (candidates.length === 0) {
-    return fortunes[Math.floor(Math.random() * fortunes.length)];
-  }
+
   return candidates[Math.floor(Math.random() * candidates.length)];
 }
-  
+
 function drawFortune() {
   if (drawing) return;
   drawing = true;
 
   const button = document.getElementById("drawButton");
-  const shrine = document.querySelector(".sakura");
+  const shrine = document.querySelectorAll(".sakura")[1];
   const message = document.getElementById("message");
   const cardInner = document.getElementById("cardInner");
   const cardBack = document.getElementById("cardBack");
@@ -354,18 +353,14 @@ function drawFortune() {
   cardInner.classList.remove("flipping");
   void cardInner.offsetWidth;
   cardInner.classList.add("flipping");
+
   shrine.classList.add("shaking");
   message.textContent = "幸せのおみくじを引いています…";
+
   document.querySelector(".result").style.display = "block";
-　cardFront.style.display = "none";
-  
+
   setTimeout(() => {
-        let index;
-    do {
-      index = Math.floor(Math.random() * fortunes.length);
-    } while (index === lastIndex);
-    lastIndex = index;
-        const result = pickFortune();
+    const result = pickFortune();
 
     document.getElementById("fortune").textContent = result.name;
     document.getElementById("comment").textContent = result.comment;
@@ -373,19 +368,26 @@ function drawFortune() {
     document.getElementById("item").textContent = result.item;
     document.getElementById("action").textContent = result.action;
 
-cardBack.style.display = "none";
+    cardBack.style.display = "none";
     cardFront.style.display = "block";
+
     cardInner.classList.remove("flipping");
     shrine.classList.remove("shaking");
+
     message.innerHTML = "今日のあなたに、<br>幸せが訪れますように。";
 
     button.disabled = false;
     button.textContent = "もう一度引く ✨";
+
     drawing = false;
 
-    cardFront.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    cardFront.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
   }, 800);
 }
+
 </script>
 </body>
 </html>
