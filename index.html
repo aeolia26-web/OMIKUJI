@@ -7,51 +7,48 @@
 <title>幸せおみくじ</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   padding: 25px 16px;
   font-family: sans-serif;
-  background: #f8f3e9;
+  background: #fff0f0;
   color: #493b30;
   text-align: center;
 }
 
 .container {
   max-width: 460px;
-  margin: 25px auto;
-  padding: 30px 20px;
-  background: #fffdf8;
-  border: 2px solid #d7b878;
-  border-radius: 20px;
+  margin: 15px auto;
+  padding: 28px 18px;
+  background: #fffdfb;
+  border: 2px solid #f2c9ce;
+  border-radius: 22px;
   box-shadow: 0 5px 20px #00000012;
 }
 
 h1 {
-  color: #a47730;
-  font-size: 30px;
-  margin: 5px 0;
+  color: #d86d79;
+  font-size: 28px;
+  margin: 8px 0;
 }
 
 .subtitle {
-  color: #9b8873;
+  color: #b88c91;
   letter-spacing: 3px;
   font-size: 12px;
 }
 
-.date {
-  margin: 22px 0;
-  color: #88745e;
-  font-size: 15px;
+.sakura {
+  font-size: 25px;
+  margin: 10px;
 }
 
-.shrine {
-  font-size: 65px;
-  margin: 15px;
-  display: inline-block;
+.date {
+  margin: 18px 0;
+  color: #9b777d;
+  font-size: 14px;
 }
 
 .message {
@@ -62,9 +59,9 @@ h1 {
 button {
   border: none;
   border-radius: 30px;
-  padding: 16px 35px;
+  padding: 16px 32px;
   margin: 20px 0;
-  background: #a47730;
+  background: #e47782;
   color: white;
   font-size: 18px;
   font-weight: bold;
@@ -77,29 +74,76 @@ button:active {
 }
 
 button:disabled {
-  opacity: 0.7;
+  opacity: 0.65;
   cursor: wait;
 }
 
+/* おみくじカード */
+
 .result {
-  display: none;
-  margin-top: 20px;
-  padding: 25px 16px;
-  background: #fffaf0;
-  border: 1px solid #e4d2ae;
+  display: block;
+  margin-top: 18px;
+  padding: 25px 15px;
+  background: #fff0f2;
+  border: 1px solid #f0c6cd;
   border-radius: 18px;
   line-height: 1.9;
-  box-shadow: 0 3px 12px #0000000a;
+  box-shadow: 0 4px 12px #0000000a;
+  perspective: 800px;
 }
 
-.result.show {
-  animation: appear 0.6s ease;
+.card-inner {
+  min-height: 160px;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.card-inner.flipping {
+  animation: flip 0.8s ease;
+}
+
+@keyframes flip {
+  0% { transform: rotateY(0deg); }
+  45% { transform: rotateY(90deg); }
+  100% { transform: rotateY(0deg); }
+}
+
+.card-back {
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid #edc2ca;
+  border-radius: 15px;
+  padding: 20px 10px;
+}
+
+.card-back .question {
+  font-size: 48px;
+  color: #e47782;
+  font-weight: bold;
+}
+
+.card-back p {
+  color: #aa858a;
+  font-size: 14px;
+}
+
+.card-front {
+  display: none;
+  background: #ffffff;
+  border: 2px solid #edc2ca;
+  border-radius: 15px;
+  padding: 20px 12px;
+  animation: appear 0.5s ease;
 }
 
 @keyframes appear {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -109,9 +153,9 @@ button:disabled {
 
 .fortune {
   font-size: 42px;
-  color: #b17d27;
+  color: #d86d79;
   font-weight: bold;
-  margin: 12px 0;
+  margin: 10px;
 }
 
 #comment {
@@ -122,9 +166,9 @@ button:disabled {
 
 .detail {
   text-align: left;
-  margin-top: 22px;
+  margin-top: 20px;
   padding: 15px;
-  background: #f8f1e3;
+  background: #fff5f1;
   border-radius: 12px;
   line-height: 2.2;
   font-size: 14px;
@@ -132,19 +176,19 @@ button:disabled {
 
 .footer {
   font-size: 12px;
-  color: #a99b89;
+  color: #b99b9e;
   margin-top: 25px;
 }
 
-@keyframes shake {
-  0%, 100% { transform: rotate(0); }
-  25% { transform: rotate(-10deg); }
-  50% { transform: rotate(10deg); }
-  75% { transform: rotate(-7deg); }
+.shaking {
+  animation: shake 0.25s infinite;
 }
 
-.shaking {
-  animation: shake 0.3s infinite;
+@keyframes shake {
+  0%,100% { transform: rotate(0); }
+  25% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+  75% { transform: rotate(-5deg); }
 }
 
 </style>
@@ -156,43 +200,51 @@ button:disabled {
 
   <div class="subtitle">TODAY'S FORTUNE</div>
 
+  <div class="sakura">🌸 🌸 🌸</div>
+
   <h1>幸せおみくじ</h1>
 
-  <div class="shrine" id="shrine">⛩️</div>
-
   <div class="date" id="date"></div>
+
+  <div class="sakura">⛩️</div>
 
   <p class="message" id="message">
     今日のあなたに、<br>
     幸せが訪れますように。
   </p>
 
-  <button id="drawButton" onclick="drawFortune()">
-    おみくじを引く ✨
-  </button>
+  <div class="result">
 
-  <div class="result" id="result">
+    <div class="card-inner" id="cardInner">
 
-    <div>今日のあなたの運勢は…</div>
+      <div class="card-back" id="cardBack">
+        <div class="question">？？？</div>
+        <p>今日のあなたの運勢は…</p>
+        <div>🌸 幸せを引き寄せよう 🌸</div>
+      </div>
 
-    <div class="fortune" id="fortune"></div>
+      <div class="card-front" id="cardFront">
 
-    <p id="comment"></p>
+        <div>今日のあなたの運勢は…</div>
 
-    <div class="detail">
-      🎨 ラッキーカラー：<span id="color"></span><br>
-      🎁 ラッキーアイテム：<span id="item"></span><br>
-      🌸 今日の開運アクション：<span id="action"></span>
+        <div class="fortune" id="fortune"></div>
+
+        <p id="comment"></p>
+
+        <div class="detail">
+          🎨 ラッキーカラー：<span id="color"></span><br>
+          🎁 ラッキーアイテム：<span id="item"></span><br>
+          🌸 今日の開運アクション：<span id="action"></span>
+        </div>
+
+      </div>
+
     </div>
 
   </div>
 
-  <button
-    id="againButton"
-    onclick="drawFortune()"
-    style="background:#88745e;"
-  >
-    もう一度引く
+  <button id="drawButton" onclick="drawFortune()">
+    おみくじを引く ✨
   </button>
 
   <div class="footer">
@@ -203,162 +255,168 @@ button:disabled {
 
 <script>
 
-// おみくじの内容
+// おみくじの内容（18種類）
 
 const fortunes = [
-
-  {
-    name: "大吉",
-    comment: "今日は絶好調！新しいことに挑戦すると、嬉しい発見がありそう。",
-    color: "ゴールド",
-    item: "お気に入りの飲み物",
-    action: "気になっていたことを始めてみよう"
-  },
-  {
-    name: "大吉",
-    comment: "思いがけない嬉しい知らせが届くかも。笑顔でいると運気がさらに上昇します。",
-    color: "オレンジ",
-    item: "明るい色の小物",
-    action: "感謝の気持ちを言葉にして伝えてみよう"
-  },
-  {
-    name: "大吉",
-    comment: "直感が冴えわたる日。ひらめきを信じて動くと、素敵な流れに乗れそう。",
-    color: "イエロー",
-    item: "お気に入りのアクセサリー",
-    action: "ピンときた方へ行ってみよう"
-  },
-  {
-    name: "中吉",
-    comment: "焦らず一歩ずつ進めば大丈夫。周囲との協力が幸運を呼びます。",
-    color: "スカイブルー",
-    item: "ハンカチ",
-    action: "誰かに笑顔で挨拶してみよう"
-  },
-  {
-    name: "中吉",
-    comment: "コツコツ続けてきたことが、少しずつ形になってくる日です。",
-    color: "ミントグリーン",
-    item: "手帳",
-    action: "今日の頑張りを一つ書き出してみよう"
-  },
-  {
-    name: "中吉",
-    comment: "人とのご縁に恵まれる日。気軽な会話から良いヒントが見つかりそう。",
-    color: "コーラル",
-    item: "スマホ",
-    action: "久しぶりの人にメッセージを送ってみよう"
-  },
-  {
-    name: "小吉",
-    comment: "小さな幸せに気づける日。身近なところに嬉しい出来事がありそう。",
-    color: "ピンク",
-    item: "甘いお菓子",
-    action: "少しだけ自分を甘やかそう"
-  },
-  {
-    name: "小吉",
-    comment: "ちょっとした親切が巡り巡って返ってくる日。気軽に動いてみて。",
-    color: "ベージュ",
-    item: "ミニタオル",
-    action: "誰かのために小さなことを一つしてみよう"
-  },
-  {
-    name: "小吉",
-    comment: "好きなことに触れると心が満たされる日。楽しむ時間を大切に。",
-    color: "ラベンダー",
-    item: "好きな音楽",
-    action: "お気に入りの曲を一曲じっくり聴こう"
-  },
-  {
-    name: "吉",
-    comment: "穏やかな一日になりそう。いつものペースを大切に。",
-    color: "グリーン",
-    item: "お気に入りのペン",
-    action: "身の回りを少し整理してみよう"
-  },
-  {
-    name: "吉",
-    comment: "何気ない日常の中に、ほっとする瞬間が見つかりそう。",
-    color: "アイボリー",
-    item: "マグカップ",
-    action: "窓を開けて外の空気を吸ってみよう"
-  },
-  {
-    name: "吉",
-    comment: "丁寧に過ごすほど運気が整う日。一つひとつを大切にしてみて。",
-    color: "ネイビー",
-    item: "ノート",
-    action: "いつもより少しゆっくり食事を味わおう"
-  },
-  {
-    name: "末吉",
-    comment: "これから運気が上向く予感。今は準備を楽しむ時期です。",
-    color: "パープル",
-    item: "小さなメモ帳",
-    action: "明日の楽しみを一つ考えてみよう"
-  },
-  {
-    name: "末吉",
-    comment: "今日の頑張りは、あとから効いてくるタイプ。焦らず見守って。",
-    color: "シルバー",
-    item: "腕時計",
-    action: "やるべきことを一つだけ終わらせよう"
-  },
-  {
-    name: "末吉",
-    comment: "小さな変化が追い風になりそう。新しい習慣を試すのにぴったりです。",
-    color: "ライトブルー",
-    item: "水筒",
-    action: "いつもと違う道を歩いてみよう"
-  },
-  {
-    name: "末吉",
-    comment: "ゆっくり育つ運気の日。続けることで、じわじわ良くなっていきます。",
-    color: "オリーブ",
-    item: "観葉植物",
-    action: "寝る前に今日よかったことを思い出そう"
-  },
-  {
-    name: "凶",
-    comment: "今日は無理をしないことが大切。休むことも立派な前進です。",
-    color: "ホワイト",
-    item: "温かい飲み物",
-    action: "深呼吸してゆっくり過ごそう"
-  },
-  {
-    name: "凶",
-    comment: "少し空回りしやすい日。大きな決断は明日に回して、のんびり構えて。",
-    color: "グレー",
-    item: "ふわふわのブランケット",
-    action: "早めにお風呂に入って今日は早く休もう"
-  }
-
+{
+name:"大吉",
+comment:"今日は絶好調！新しいことに挑戦すると、嬉しい発見がありそう。",
+color:"ゴールド",
+item:"お気に入りの飲み物",
+action:"気になっていたことを始めてみよう"
+},
+{
+name:"大吉",
+comment:"思いがけない嬉しい知らせが届くかも。笑顔でいると運気がさらに上昇します。",
+color:"オレンジ",
+item:"明るい色の小物",
+action:"感謝の気持ちを言葉にして伝えてみよう"
+},
+{
+name:"大吉",
+comment:"直感が冴えわたる日。ひらめきを信じて動くと、素敵な流れに乗れそう。",
+color:"イエロー",
+item:"お気に入りのアクセサリー",
+action:"ピンときた方へ行ってみよう"
+},
+{
+name:"中吉",
+comment:"焦らず一歩ずつ進めば大丈夫。周囲との協力が幸運を呼びます。",
+color:"スカイブルー",
+item:"ハンカチ",
+action:"誰かに笑顔で挨拶してみよう"
+},
+{
+name:"中吉",
+comment:"コツコツ続けてきたことが、少しずつ形になってくる日です。",
+color:"ミントグリーン",
+item:"手帳",
+action:"今日の頑張りを一つ書き出してみよう"
+},
+{
+name:"中吉",
+comment:"人とのご縁に恵まれる日。気軽な会話から良いヒントが見つかりそう。",
+color:"コーラル",
+item:"スマホ",
+action:"久しぶりの人にメッセージを送ってみよう"
+},
+{
+name:"小吉",
+comment:"小さな幸せに気づける日。身近なところに嬉しい出来事がありそう。",
+color:"ピンク",
+item:"甘いお菓子",
+action:"少しだけ自分を甘やかそう"
+},
+{
+name:"小吉",
+comment:"ちょっとした親切が巡り巡って返ってくる日。気軽に動いてみて。",
+color:"ベージュ",
+item:"ミニタオル",
+action:"誰かのために小さなことを一つしてみよう"
+},
+{
+name:"小吉",
+comment:"好きなことに触れると心が満たされる日。楽しむ時間を大切に。",
+color:"ラベンダー",
+item:"好きな音楽",
+action:"お気に入りの曲を一曲じっくり聴こう"
+},
+{
+name:"吉",
+comment:"穏やかな一日になりそう。いつものペースを大切に。",
+color:"グリーン",
+item:"お気に入りのペン",
+action:"身の回りを少し整理してみよう"
+},
+{
+name:"吉",
+comment:"何気ない日常の中に、ほっとする瞬間が見つかりそう。",
+color:"アイボリー",
+item:"マグカップ",
+action:"窓を開けて外の空気を吸ってみよう"
+},
+{
+name:"吉",
+comment:"丁寧に過ごすほど運気が整う日。一つひとつを大切にしてみて。",
+color:"ネイビー",
+item:"ノート",
+action:"いつもより少しゆっくり食事を味わおう"
+},
+{
+name:"末吉",
+comment:"これから運気が上向く予感。今は準備を楽しむ時期です。",
+color:"パープル",
+item:"小さなメモ帳",
+action:"明日の楽しみを一つ考えてみよう"
+},
+{
+name:"末吉",
+comment:"今日の頑張りは、あとから効いてくるタイプ。焦らず見守って。",
+color:"シルバー",
+item:"腕時計",
+action:"やるべきことを一つだけ終わらせよう"
+},
+{
+name:"末吉",
+comment:"小さな変化が追い風になりそう。新しい習慣を試すのにぴったりです。",
+color:"ライトブルー",
+item:"水筒",
+action:"いつもと違う道を歩いてみよう"
+},
+{
+name:"末吉",
+comment:"ゆっくり育つ運気の日。続けることで、じわじわ良くなっていきます。",
+color:"オリーブ",
+item:"観葉植物",
+action:"寝る前に今日よかったことを思い出そう"
+},
+{
+name:"凶",
+comment:"今日は無理をしないことが大切。休むことも立派な前進です。",
+color:"ホワイト",
+item:"温かい飲み物",
+action:"深呼吸してゆっくり過ごそう"
+},
+{
+name:"凶",
+comment:"少し空回りしやすい日。大きな決断は明日に回して、のんびり構えて。",
+color:"グレー",
+item:"ふわふわのブランケット",
+action:"早めにお風呂に入って今日は早く休もう"
+}
 ];
 
 
-// 今日の日付を自動表示
+// 日本時間（JST）で日付を表示
 
-const today = new Date();
+function updateDate() {
 
-const weekDays = [
-  "日曜日",
-  "月曜日",
-  "火曜日",
-  "水曜日",
-  "木曜日",
-  "金曜日",
-  "土曜日"
-];
+  const parts = new Intl.DateTimeFormat("ja-JP", {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    weekday: "long"
+  }).formatToParts(new Date());
 
-document.getElementById("date").textContent =
-  today.getFullYear() + "年" +
-  (today.getMonth() + 1) + "月" +
-  today.getDate() + "日（" +
-  weekDays[today.getDay()] + "）";
+  const getPart = (type) =>
+    parts.find(part => part.type === type).value;
+
+  document.getElementById("date").textContent =
+    getPart("year") + "年" +
+    getPart("month") + "月" +
+    getPart("day") + "日（" +
+    getPart("weekday") + "）";
+
+}
+
+// 起動時に表示し、1分ごとに確認
+
+updateDate();
+setInterval(updateDate, 60000);
 
 
-// おみくじを引く処理
+// おみくじ抽選
 
 let drawing = false;
 
@@ -368,28 +426,28 @@ function drawFortune() {
 
   drawing = true;
 
-  const resultBox = document.getElementById("result");
-  const shrine = document.getElementById("shrine");
+  const button = document.getElementById("drawButton");
+  const shrine = document.querySelector(".sakura");
   const message = document.getElementById("message");
-  const drawButton = document.getElementById("drawButton");
-  const againButton = document.getElementById("againButton");
+  const cardInner = document.getElementById("cardInner");
+  const cardBack = document.getElementById("cardBack");
+  const cardFront = document.getElementById("cardFront");
 
-  const originalMessage =
-    "今日のあなたに、<br>幸せが訪れますように。";
+  button.disabled = true;
 
-  // ボタンの連続操作を防止
+  button.textContent = "運勢を占っています…";
 
-  drawButton.disabled = true;
-  againButton.disabled = true;
+  cardFront.style.display = "none";
+  cardBack.style.display = "flex";
 
-  resultBox.style.display = "none";
-  resultBox.classList.remove("show");
+  cardInner.classList.remove("flipping");
+  void cardInner.offsetWidth;
+
+  cardInner.classList.add("flipping");
 
   shrine.classList.add("shaking");
 
-  message.textContent = "おみくじを引いています…";
-
-  // 結果が出るまでの演出時間
+  message.textContent = "幸せのおみくじを引いています…";
 
   setTimeout(() => {
 
@@ -412,22 +470,25 @@ function drawFortune() {
     document.getElementById("action").textContent =
       result.action;
 
+    cardBack.style.display = "none";
+    cardFront.style.display = "block";
+
+    cardInner.classList.remove("flipping");
+
     shrine.classList.remove("shaking");
 
-    message.innerHTML = originalMessage;
+    message.innerHTML =
+      "今日のあなたに、<br>幸せが訪れますように。";
 
-    resultBox.style.display = "block";
-    resultBox.classList.add("show");
+    button.disabled = false;
+    button.textContent = "もう一度引く ✨";
 
-    drawButton.disabled = false;
-    againButton.disabled = false;
+    drawing = false;
 
-    resultBox.scrollIntoView({
+    cardFront.scrollIntoView({
       behavior: "smooth",
       block: "nearest"
     });
-
-    drawing = false;
 
   }, 800);
 
