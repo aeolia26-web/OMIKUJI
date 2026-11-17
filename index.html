@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -105,15 +104,13 @@ button:active {
 
   <div class="subtitle">TODAY'S FORTUNE</div>
   <h1>幸せおみくじ</h1>
-  <div class="shrine" id="shrine">⛩️</div>
-
+  <div class="shrine">⛩️</div>
 
   <div class="date" id="date"></div>
 
-  <p class="message" id="message">
-
+  <p class="message">
     今日のあなたに、<br>
-    小さな幸せが訪れますように。
+    幸せが訪れますように。
   </p>
 
   <button onclick="drawFortune()">
@@ -143,9 +140,8 @@ button:active {
 </div>
 
 <script>
+
 const fortunes = [
-  {
-    const fortunes = [
   {
     name: "大吉",
     comment: "今日は絶好調！新しいことに挑戦すると、嬉しい発見がありそう。",
@@ -271,9 +267,9 @@ const fortunes = [
     color: "グレー",
     item: "ふわふわのブランケット",
     action: "早めにお風呂に入って今日は早く休もう"
-
   }
 ];
+
 
 const today = new Date();
 document.getElementById("date").textContent =
