@@ -346,7 +346,7 @@ function drawFortune() {
       index = Math.floor(Math.random() * fortunes.length);
     } while (index === lastIndex);
     lastIndex = index;
-    const result = fortunes[index];
+        const result = pickFortune();
 
     document.getElementById("fortune").textContent = result.name;
     document.getElementById("comment").textContent = result.comment;
