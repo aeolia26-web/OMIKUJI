@@ -85,7 +85,7 @@
     }
 
     .result {
-      display: block;
+      display:none;
       margin-top: 18px;
       padding: 25px 15px;
       background: #fff0f2;
@@ -210,7 +210,16 @@
     今日のあなたに、<br>
     幸せが訪れますように。
   </p>
+  <p class="message" id="message">
+    今日のあなたに、<br>
+    幸せが訪れますように。
+  </p>
 
+  <button id="drawButton" onclick="drawFortune()">
+    おみくじを引く ✨
+  </button>
+
+  <div class="result">
   <div class="result">
     <div class="card-inner" id="cardInner">
       <div class="card-back" id="cardBack">
@@ -232,9 +241,7 @@
     </div>
   </div>
 
-  <button id="drawButton" onclick="drawFortune()">
-    おみくじを引く ✨
-  </button>
+ 
 
   <div class="footer">
     あなたの今日が素敵な一日になりますように。
@@ -305,7 +312,9 @@ function drawFortune() {
   cardInner.classList.add("flipping");
   shrine.classList.add("shaking");
   message.textContent = "幸せのおみくじを引いています…";
-
+  document.querySelector(".result").style.display = "block";
+　cardFront.style.display = "none";
+  
   setTimeout(() => {
     const result = fortunes[Math.floor(Math.random() * fortunes.length)];
 
