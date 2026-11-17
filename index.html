@@ -284,7 +284,8 @@ updateDate();
 setInterval(updateDate, 60000);
 
 let drawing = false;
-
+let lastIndex = -1;
+  
 function drawFortune() {
   if (drawing) return;
   drawing = true;
@@ -311,7 +312,12 @@ function drawFortune() {
 　cardFront.style.display = "none";
   
   setTimeout(() => {
-    const result = fortunes[Math.floor(Math.random() * fortunes.length)];
+        let index;
+    do {
+      index = Math.floor(Math.random() * fortunes.length);
+    } while (index === lastIndex);
+    lastIndex = index;
+    const result = fortunes[index];
 
     document.getElementById("fortune").textContent = result.name;
     document.getElementById("comment").textContent = result.comment;
