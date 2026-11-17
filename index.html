@@ -278,33 +278,48 @@ document.getElementById("date").textContent =
   (today.getMonth() + 1) + "月" +
   today.getDate() + "日";
 
+let drawing = false;
+
 function drawFortune() {
-  const result = fortunes[
-    Math.floor(Math.random() * fortunes.length)
-  ];
+  if (drawing) return;
+  drawing = true;
 
-  document.getElementById("fortune").textContent =
-    result.name;
+  const resultBox = document.getElementById("result");
+  const shrine = document.getElementById("shrine");
+  const message = document.getElementById("message");
+  const originalMessage = message.innerHTML;
 
-  document.getElementById("comment").textContent =
-    result.comment;
+  resultBox.style.display = "none";
+  resultBox.classList.remove("show");
+  shrine.classList.add("shaking");
+  message.textContent = "おみくじを引いています…";
 
-  document.getElementById("color").textContent =
-    result.color;
+  setTimeout(() => {
+    const result = fortunes[
+      Math.floor(Math.random() * fortunes.length)
+    ];
 
-  document.getElementById("item").textContent =
-    result.item;
+    document.getElementById("fortune").textContent = result.name;
+    document.getElementById("comment").textContent = result.comment;
+    document.getElementById("color").textContent = result.color;
+    document.getElementById("item").textContent = result.item;
+    document.getElementById("action").textContent = result.action;
 
-  document.getElementById("action").textContent =
-    result.action;
+    shrine.classList.remove("shaking");
+    message.innerHTML = originalMessage;
+    resultBox.style.display = "block";
+    resultBox.classList.add("show");
 
-  document.getElementById("result").style.display = "block";
+    resultBox.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
 
-  document.getElementById("result").scrollIntoView({
-    behavior: "smooth",
-    block: "nearest"
-  });
+    drawing = false;
+  }, 2000);
 }
+
+
 </script>
 </body>
 </html>
