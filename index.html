@@ -1,225 +1,209 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  
-  <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>幸せおみくじ</title>
 
-  <!-- ▼ ここから下をに追加・書き換え ▼ -->
+  <!-- noteのカード用設定（OGPタグ） -->
   <meta property="og:title" content="幸せおみくじ">
   <meta property="og:description" content="毎日引ける幸せおみくじ。今日のラッキーアイテムを確認しよう！">
-  <meta property="og:image" content="https://aeolia26.github.io/OMIKUJI/omikujicard.jpg">
-  <meta property="og:url" content="https://aeolia26.github.io/OMIKUJI/">
+  <meta property="og:image" content="https://aeolia26-web.github.io/OMIKUJI/omikujicard.JPG">
+  <meta property="og:url" content="https://aeolia26-web.github.io/OMIKUJI/">
   <meta name="twitter:card" content="summary_large_image">
-  <!-- ▲ ここまで ▲ -->
-</head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>幸せおみくじ</title>
+  <style>
+    * { box-sizing: border-box; }
 
-<style>
-* { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 25px 16px;
+      font-family: sans-serif;
+      background: #fff0f0;
+      color: #493b30;
+      text-align: center;
+    }
 
-body {
-  margin: 0;
-  padding: 25px 16px;
-  font-family: sans-serif;
-  background: #fff0f0;
-  color: #493b30;
-  text-align: center;
-}
+    .container {
+      max-width: 460px;
+      margin: 15px auto;
+      padding: 28px 18px;
+      background: #fffdfb;
+      border: 2px solid #f2c9ce;
+      border-radius: 22px;
+      box-shadow: 0 5px 20px #00000012;
+    }
 
-.container {
-  max-width: 460px;
-  margin: 15px auto;
-  padding: 28px 18px;
-  background: #fffdfb;
-  border: 2px solid #f2c9ce;
-  border-radius: 22px;
-  box-shadow: 0 5px 20px #00000012;
-}
+    h1 {
+      color: #d86d79;
+      font-size: 28px;
+      margin: 8px 0;
+    }
 
-h1 {
-  color: #d86d79;
-  font-size: 28px;
-  margin: 8px 0;
-}
+    .subtitle {
+      color: #b88c91;
+      letter-spacing: 3px;
+      font-size: 12px;
+    }
 
-.subtitle {
-  color: #b88c91;
-  letter-spacing: 3px;
-  font-size: 12px;
-}
+    .sakura {
+      font-size: 25px;
+      margin: 10px;
+    }
 
-.sakura {
-  font-size: 25px;
-  margin: 10px;
-}
+    .date {
+      margin: 18px 0;
+      color: #9b777d;
+      font-size: 14px;
+    }
 
-.date {
-  margin: 18px 0;
-  color: #9b777d;
-  font-size: 14px;
-}
+    .message {
+      line-height: 1.9;
+      color: #796858;
+    }
 
-.message {
-  line-height: 1.9;
-  color: #796858;
-}
+    button {
+      border: none;
+      border-radius: 30px;
+      padding: 16px 32px;
+      margin: 20px 0;
+      background: #e47782;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 3px 8px #00000015;
+    }
 
-button {
-  border: none;
-  border-radius: 30px;
-  padding: 16px 32px;
-  margin: 20px 0;
-  background: #e47782;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 3px 8px #00000015;
-}
+    button:active {
+      transform: scale(0.97);
+    }
 
-button:active {
-  transform: scale(0.97);
-}
+    button:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
 
-button:disabled {
-  opacity: 0.65;
-  cursor: wait;
-}
+    .result {
+      display: block;
+      margin-top: 18px;
+      padding: 25px 15px;
+      background: #fff0f2;
+      border: 1px solid #f0c6cd;
+      border-radius: 18px;
+      line-height: 1.9;
+      box-shadow: 0 4px 12px #0000000a;
+      perspective: 800px;
+    }
 
-/* おみくじカード */
+    .card-inner {
+      min-height: 160px;
+      transition: transform 0.6s ease;
+      transform-style: preserve-3d;
+    }
 
-.result {
-  display: block;
-  margin-top: 18px;
-  padding: 25px 15px;
-  background: #fff0f2;
-  border: 1px solid #f0c6cd;
-  border-radius: 18px;
-  line-height: 1.9;
-  box-shadow: 0 4px 12px #0000000a;
-  perspective: 800px;
-}
+    .card-inner.flipping {
+      animation: flip 0.8s ease;
+    }
 
-.card-inner {
-  min-height: 160px;
-  transition: transform 0.6s ease;
-  transform-style: preserve-3d;
-}
+    @keyframes flip {
+      0% { transform: rotateY(0deg); }
+      45% { transform: rotateY(90deg); }
+      100% { transform: rotateY(0deg); }
+    }
 
-.card-inner.flipping {
-  animation: flip 0.8s ease;
-}
+    .card-back {
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #ffffff;
+      border: 2px solid #edc2ca;
+      border-radius: 15px;
+      padding: 20px 10px;
+    }
 
-@keyframes flip {
-  0% { transform: rotateY(0deg); }
-  45% { transform: rotateY(90deg); }
-  100% { transform: rotateY(0deg); }
-}
+    .card-back .question {
+      font-size: 48px;
+      color: #e47782;
+      font-weight: bold;
+    }
 
-.card-back {
-  min-height: 160px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #ffffff;
-  border: 2px solid #edc2ca;
-  border-radius: 15px;
-  padding: 20px 10px;
-}
+    .card-back p {
+      color: #aa858a;
+      font-size: 14px;
+    }
 
-.card-back .question {
-  font-size: 48px;
-  color: #e47782;
-  font-weight: bold;
-}
+    .card-front {
+      display: none;
+      background: #ffffff;
+      border: 2px solid #edc2ca;
+      border-radius: 15px;
+      padding: 20px 12px;
+      animation: appear 0.5s ease;
+    }
 
-.card-back p {
-  color: #aa858a;
-  font-size: 14px;
-}
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-.card-front {
-  display: none;
-  background: #ffffff;
-  border: 2px solid #edc2ca;
-  border-radius: 15px;
-  padding: 20px 12px;
-  animation: appear 0.5s ease;
-}
+    .fortune {
+      font-size: 42px;
+      color: #d86d79;
+      font-weight: bold;
+      margin: 10px;
+    }
 
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+    #comment {
+      color: #796858;
+      line-height: 2;
+      margin: 12px 0;
+    }
 
-.fortune {
-  font-size: 42px;
-  color: #d86d79;
-  font-weight: bold;
-  margin: 10px;
-}
+    .detail {
+      text-align: left;
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff5f1;
+      border-radius: 12px;
+      line-height: 2.2;
+      font-size: 14px;
+    }
 
-#comment {
-  color: #796858;
-  line-height: 2;
-  margin: 12px 0;
-}
+    .footer {
+      font-size: 12px;
+      color: #b99b9e;
+      margin-top: 25px;
+    }
 
-.detail {
-  text-align: left;
-  margin-top: 20px;
-  padding: 15px;
-  background: #fff5f1;
-  border-radius: 12px;
-  line-height: 2.2;
-  font-size: 14px;
-}
+    .shaking {
+      animation: shake 0.25s infinite;
+    }
 
-.footer {
-  font-size: 12px;
-  color: #b99b9e;
-  margin-top: 25px;
-}
-
-.shaking {
-  animation: shake 0.25s infinite;
-}
-
-@keyframes shake {
-  0%,100% { transform: rotate(0); }
-  25% { transform: rotate(-8deg); }
-  50% { transform: rotate(8deg); }
-  75% { transform: rotate(-5deg); }
-}
-
-</style>
+    @keyframes shake {
+      0%,100% { transform: rotate(0); }
+      25% { transform: rotate(-8deg); }
+      50% { transform: rotate(8deg); }
+      75% { transform: rotate(-5deg); }
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="container">
-
   <div class="subtitle">TODAY'S FORTUNE</div>
-
   <div class="sakura">🌸 🌸 🌸</div>
-
   <h1>幸せおみくじ</h1>
-
   <div class="date" id="date"></div>
-
   <div class="sakura">⛩️</div>
 
   <p class="message" id="message">
@@ -228,9 +212,7 @@ button:disabled {
   </p>
 
   <div class="result">
-
     <div class="card-inner" id="cardInner">
-
       <div class="card-back" id="cardBack">
         <div class="question">？？？</div>
         <p>今日のあなたの運勢は…</p>
@@ -238,23 +220,16 @@ button:disabled {
       </div>
 
       <div class="card-front" id="cardFront">
-
         <div>今日のあなたの運勢は…</div>
-
         <div class="fortune" id="fortune"></div>
-
         <p id="comment"></p>
-
         <div class="detail">
           🎨 ラッキーカラー：<span id="color"></span><br>
           🎁 ラッキーアイテム：<span id="item"></span><br>
           🌸 今日の開運アクション：<span id="action"></span>
         </div>
-
       </div>
-
     </div>
-
   </div>
 
   <button id="drawButton" onclick="drawFortune()">
@@ -264,147 +239,31 @@ button:disabled {
   <div class="footer">
     あなたの今日が素敵な一日になりますように。
   </div>
-
 </div>
 
 <script>
-
-// おみくじの内容（18種類）
-
 const fortunes = [
-{
-name:"大吉",
-comment:"今日は絶好調！新しいことに挑戦すると、嬉しい発見がありそう。",
-color:"ゴールド",
-item:"お気に入りの飲み物",
-action:"気になっていたことを始めてみよう"
-},
-{
-name:"大吉",
-comment:"思いがけない嬉しい知らせが届くかも。笑顔でいると運気がさらに上昇します。",
-color:"オレンジ",
-item:"明るい色の小物",
-action:"感謝の気持ちを言葉にして伝えてみよう"
-},
-{
-name:"大吉",
-comment:"直感が冴えわたる日。ひらめきを信じて動くと、素敵な流れに乗れそう。",
-color:"イエロー",
-item:"お気に入りのアクセサリー",
-action:"ピンときた方へ行ってみよう"
-},
-{
-name:"中吉",
-comment:"焦らず一歩ずつ進めば大丈夫。周囲との協力が幸運を呼びます。",
-color:"スカイブルー",
-item:"ハンカチ",
-action:"誰かに笑顔で挨拶してみよう"
-},
-{
-name:"中吉",
-comment:"コツコツ続けてきたことが、少しずつ形になってくる日です。",
-color:"ミントグリーン",
-item:"手帳",
-action:"今日の頑張りを一つ書き出してみよう"
-},
-{
-name:"中吉",
-comment:"人とのご縁に恵まれる日。気軽な会話から良いヒントが見つかりそう。",
-color:"コーラル",
-item:"スマホ",
-action:"久しぶりの人にメッセージを送ってみよう"
-},
-{
-name:"小吉",
-comment:"小さな幸せに気づける日。身近なところに嬉しい出来事がありそう。",
-color:"ピンク",
-item:"甘いお菓子",
-action:"少しだけ自分を甘やかそう"
-},
-{
-name:"小吉",
-comment:"ちょっとした親切が巡り巡って返ってくる日。気軽に動いてみて。",
-color:"ベージュ",
-item:"ミニタオル",
-action:"誰かのために小さなことを一つしてみよう"
-},
-{
-name:"小吉",
-comment:"好きなことに触れると心が満たされる日。楽しむ時間を大切に。",
-color:"ラベンダー",
-item:"好きな音楽",
-action:"お気に入りの曲を一曲じっくり聴こう"
-},
-{
-name:"吉",
-comment:"穏やかな一日になりそう。いつものペースを大切に。",
-color:"グリーン",
-item:"お気に入りのペン",
-action:"身の回りを少し整理してみよう"
-},
-{
-name:"吉",
-comment:"何気ない日常の中に、ほっとする瞬間が見つかりそう。",
-color:"アイボリー",
-item:"マグカップ",
-action:"窓を開けて外の空気を吸ってみよう"
-},
-{
-name:"吉",
-comment:"丁寧に過ごすほど運気が整う日。一つひとつを大切にしてみて。",
-color:"ネイビー",
-item:"ノート",
-action:"いつもより少しゆっくり食事を味わおう"
-},
-{
-name:"末吉",
-comment:"これから運気が上向く予感。今は準備を楽しむ時期です。",
-color:"パープル",
-item:"小さなメモ帳",
-action:"明日の楽しみを一つ考えてみよう"
-},
-{
-name:"末吉",
-comment:"今日の頑張りは、あとから効いてくるタイプ。焦らず見守って。",
-color:"シルバー",
-item:"腕時計",
-action:"やるべきことを一つだけ終わらせよう"
-},
-{
-name:"末吉",
-comment:"小さな変化が追い風になりそう。新しい習慣を試すのにぴったりです。",
-color:"ライトブルー",
-item:"水筒",
-action:"いつもと違う道を歩いてみよう"
-},
-{
-name:"末吉",
-comment:"ゆっくり育つ運気の日。続けることで、じわじわ良くなっていきます。",
-color:"オリーブ",
-item:"観葉植物",
-action:"寝る前に今日よかったことを思い出そう"
-},
-{
-name:"凶",
-comment:"今日は無理をしないことが大切。休むことも立派な前進です。",
-color:"ホワイト",
-item:"温かい飲み物",
-action:"深呼吸してゆっくり過ごそう"
-},
-{
-name:"凶",
-comment:"少し空回りしやすい日。大きな決断は明日に回して、のんびり構えて。",
-color:"グレー",
-item:"ふわふわのブランケット",
-action:"早めにお風呂に入って今日は早く休もう"
-}
+  { name:"大吉", comment:"今日は絶好調！新しいことに挑戦すると、嬉しい発見がありそう。", color:"ゴールド", item:"お気に入りの飲み物", action:"気になっていたことを始めてみよう" },
+  { name:"大吉", comment:"思いがけない嬉しい知らせが届くかも。笑顔でいると運気がさらに上昇します。", color:"オレンジ", item:"明るい色の小物", action:"感謝の気持ちを言葉にして伝えてみよう" },
+  { name:"大吉", comment:"直感が冴えわたる日。ひらめきを信じて動くと、素敵な流れに乗れそう。", color:"イエロー", item:"お気に入りのアクセサリー", action:"ピンときた方へ行ってみよう" },
+  { name:"中吉", comment:"焦らず一歩ずつ進めば大丈夫。周囲との協力が幸運を呼びます。", color:"スカイブルー", item:"ハンカチ", action:"誰かに笑顔で挨拶してみよう" },
+  { name:"中吉", comment:"コツコツ続けてきたことが、少しずつ形になってくる日です。", color:"ミントグリーン", item:"手帳", action:"今日の頑張りを一つ書き出してみよう" },
+  { name:"中吉", comment:"人とのご縁に恵まれる日。気軽な会話から良いヒントが見つかりそう。", color:"コーラル", item:"スマホ", action:"久しぶりの人にメッセージを送ってみよう" },
+  { name:"小吉", comment:"小さな幸せに気づける日。身近なところに嬉しい出来事がありそう。", color:"ピンク", item:"甘いお菓子", action:"少しだけ自分を甘やかそう" },
+  { name:"小吉", comment:"ちょっとした親切が巡り巡って返ってくる日。気軽に動いてみて。", color:"ベージュ", item:"ミニタオル", action:"誰かのために小さなことを一つしてみよう" },
+  { name:"小吉", comment:"好きなことに触れると心が満たされる日。楽しむ時間を大切に。", color:"ラベンダー", item:"好きな音楽", action:"お気に入りの曲を一曲じっくり聴こう" },
+  { name:"吉", comment:"穏やかな一日になりそう。いつものペースを大切に。", color:"グリーン", item:"お気に入りのペン", action:"身の回りを少し整理してみよう" },
+  { name:"吉", comment:"何気ない日常の中に、ほっとする瞬間が見つかりそう。", color:"アイボリー", item:"マグカップ", action:"窓を開けて外の空気を吸ってみよう" },
+  { name:"吉", comment:"丁寧に過ごすほど運気が整う日。一つひとつを大切にしてみて。", color:"ネイビー", item:"ノート", action:"いつもより少しゆっくり食事を味わおう" },
+  { name:"末吉", comment:"これから運気が上向く予感。今は準備を楽しむ時期です。", color:"パープル", item:"小さなメモ帳", action:"明日の楽しみを一つ考えてみよう" },
+  { name:"末吉", comment:"今日の頑張りは、あとから効いてくるタイプ。焦らず見守って。", color:"シルバー", item:"腕時計", action:"やるべきことを一つだけ終わらせよう" },
+  { name:"末吉", comment:"小さな変化が追い風になりそう。新しい習慣を試すのにぴったりです。", color:"ライトブルー", item:"水筒", action:"いつもと違う道を歩いてみよう" },
+  { name:"末吉", comment:"ゆっくり育つ運気の日。続けることで、じわじわ良くなっていきます。", color:"オリーブ", item:"観葉植物", action:"寝る前に今日よかったことを思い出そう" },
+  { name:"凶", comment:"今日は無理をしないことが大切。休むことも立派な前進です。", color:"ホワイト", item:"温かい飲み物", action:"深呼吸してゆっくり過ごそう" },
+  { name:"凶", comment:"少し空回りしやすい日。大きな決断は明日に回して、のんびり構えて。", color:"グレー", item:"ふわふわのブランケット", action:"早めにお風呂に入って今日は早く休もう" }
 ];
 
-
-// 日本時間（JST）で日付を表示
-
 function updateDate() {
-
   const parts = new Intl.DateTimeFormat("ja-JP", {
     timeZone: "Asia/Tokyo",
     year: "numeric",
@@ -413,31 +272,19 @@ function updateDate() {
     weekday: "long"
   }).formatToParts(new Date());
 
-  const getPart = (type) =>
-    parts.find(part => part.type === type).value;
+  const getPart = (type) => parts.find(part => part.type === type).value;
 
   document.getElementById("date").textContent =
-    getPart("year") + "年" +
-    getPart("month") + "月" +
-    getPart("day") + "日（" +
-    getPart("weekday") + "）";
-
+    getPart("year") + "年" + getPart("month") + "月" + getPart("day") + "日（" + getPart("weekday") + "）";
 }
-
-// 起動時に表示し、1分ごとに確認
 
 updateDate();
 setInterval(updateDate, 60000);
 
-
-// おみくじ抽選
-
 let drawing = false;
 
 function drawFortune() {
-
   if (drawing) return;
-
   drawing = true;
 
   const button = document.getElementById("drawButton");
@@ -448,7 +295,6 @@ function drawFortune() {
   const cardFront = document.getElementById("cardFront");
 
   button.disabled = true;
-
   button.textContent = "運勢を占っています…";
 
   cardFront.style.display = "none";
@@ -456,59 +302,32 @@ function drawFortune() {
 
   cardInner.classList.remove("flipping");
   void cardInner.offsetWidth;
-
   cardInner.classList.add("flipping");
-
   shrine.classList.add("shaking");
-
   message.textContent = "幸せのおみくじを引いています…";
 
   setTimeout(() => {
+    const result = fortunes[Math.floor(Math.random() * fortunes.length)];
 
-    const result = fortunes[
-      Math.floor(Math.random() * fortunes.length)
-    ];
-
-    document.getElementById("fortune").textContent =
-      result.name;
-
-    document.getElementById("comment").textContent =
-      result.comment;
-
-    document.getElementById("color").textContent =
-      result.color;
-
-    document.getElementById("item").textContent =
-      result.item;
-
-    document.getElementById("action").textContent =
-      result.action;
+    document.getElementById("fortune").textContent = result.name;
+    document.getElementById("comment").textContent = result.comment;
+    document.getElementById("color").textContent = result.color;
+    document.getElementById("item").textContent = result.item;
+    document.getElementById("action").textContent = result.action;
 
     cardBack.style.display = "none";
     cardFront.style.display = "block";
-
     cardInner.classList.remove("flipping");
-
     shrine.classList.remove("shaking");
-
-    message.innerHTML =
-      "今日のあなたに、<br>幸せが訪れますように。";
+    message.innerHTML = "今日のあなたに、<br>幸せが訪れますように。";
 
     button.disabled = false;
     button.textContent = "もう一度引く ✨";
-
     drawing = false;
 
-    cardFront.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest"
-    });
-
+    cardFront.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, 800);
-
 }
-
 </script>
-
 </body>
 </html>
