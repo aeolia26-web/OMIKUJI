@@ -285,6 +285,35 @@ setInterval(updateDate, 60000);
 
 let drawing = false;
 let lastIndex = -1;
+
+  const fortuneWeights = {
+  "大吉": 10,
+  "中吉": 24,
+  "小吉": 24,
+  "吉": 24,
+  "末吉": 10,
+  "凶": 8
+};
+
+function pickFortune() {
+  const total = Object.values(fortuneWeights).reduce((a, b) => a + b, 0);
+  let r = Math.random() * total;
+  let chosenName = null;
+
+  for (const name in fortuneWeights) {
+    r -= fortuneWeights[name];
+    if (r < 0) {
+      chosenName = name;
+      break;
+    }
+  }
+
+  const candidates = fortunes.filter(f => f.name === chosenName);
+  if (candidates.length === 0) {
+    return fortunes[Math.floor(Math.random() * fortunes.length)];
+  }
+  return candidates[Math.floor(Math.random() * candidates.length)];
+}
   
 function drawFortune() {
   if (drawing) return;
