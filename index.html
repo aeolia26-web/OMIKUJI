@@ -328,9 +328,9 @@ setInterval(updateDate, 60000);
 
 let drawing = false;
 
-// 直近2回の運勢を記録
-let recentFortunes = [];
-
+// 直近3回に出た内容を記録
+let recentResults = [];
+  
 const fortuneWeights = {
   "大吉": 15,
   "中吉": 28,
@@ -352,34 +352,26 @@ function pickFortune() {
 
     for (const name in fortuneWeights) {
       r -= fortuneWeights[name];
-
       if (r < 0) {
         chosenName = name;
         break;
       }
     }
 
-    const candidates = fortunes.filter(
-      f => f.name === chosenName
-    );
-
-    result = candidates[
-      Math.floor(Math.random() * candidates.length)
-    ];
+    const candidates = fortunes.filter(f => f.name === chosenName);
+    result = candidates[Math.floor(Math.random() * candidates.length)];
 
     attempts++;
 
   } while (
-    recentFortunes.length >= 2 &&
-    recentFortunes[0] === result.name &&
-    recentFortunes[1] === result.name &&
+    recentResults.includes(result) &&
     attempts < 100
   );
 
-  recentFortunes.push(result.name);
+  recentResults.push(result);
 
-  if (recentFortunes.length > 2) {
-    recentFortunes.shift();
+  if (recentResults.length > 3) {
+    recentResults.shift();
   }
 
   return result;
