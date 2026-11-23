@@ -391,7 +391,7 @@ function drawFortune() {
   drawing = true;
 
   const button = document.getElementById("drawButton");
-  const shrine = document.querySelectorAll(".sakura")[1];
+  
   const message = document.getElementById("message");
   const cardInner = document.getElementById("cardInner");
   const cardBack = document.getElementById("cardBack");
@@ -407,7 +407,7 @@ function drawFortune() {
   void cardInner.offsetWidth;
   cardInner.classList.add("flipping");
 
-  shrine.classList.add("shaking");
+ 
   message.textContent = "幸せのおみくじを引いています…";
 
   document.querySelector(".result").style.display = "block";
@@ -425,7 +425,7 @@ function drawFortune() {
     cardFront.style.display = "block";
 
     cardInner.classList.remove("flipping");
-    shrine.classList.remove("shaking");
+  
 
     message.innerHTML = "今日のあなたに、<br>幸せが訪れますように。";
 
